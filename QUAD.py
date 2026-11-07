@@ -1,90 +1,5 @@
 # Math Calculations
 from math import *
-
-def get_factors(number,get_negative_nums = True):
-    if number < 0:
-        number *= -1
-        factors = {}
-        for posible_factor in range(number):
-            posible_factor += 1
-            if number % posible_factor == 0:
-
-                factors[posible_factor*-1] = number / posible_factor
-                factors[posible_factor] = (number / posible_factor) * -1
-
-        return factors
-    elif number == 1:
-        return {1:1,-1:-1}
-    else:
-        factors = {}
-        for posible_factor in range(number):
-            posible_factor += 1
-            if number % posible_factor == 0:
-
-                factors[posible_factor] = number / posible_factor
-                if get_negative_nums:
-                    factors[-posible_factor] = - (number/posible_factor)
-        
-        return factors
-def factor_standered_form_quadratic(a,b,c):
-
-    if a == 0:
-        return False
-    a = int(a)
-    b = int(b)
-    c = int(c)
-    a_factors = get_factors(a)
-    c_factors = get_factors(c)
-
-    ac = a * c
-    ac_factors = get_factors(ac)
-    print(f'AC Factors {ac_factors}')
-    ac_factor_pair_that_add_to_b = []
-
-    equation  = None
-    for factor in ac_factors:
-        if factor + ac_factors[factor] == b:
-            ac_factor_pair_that_add_to_b = [factor, ac_factors[factor]]
-    if ac_factor_pair_that_add_to_b != []:
-        if a == 1:
-            if  ac_factor_pair_that_add_to_b[0] + ac_factor_pair_that_add_to_b[1] == b:
-                if ac_factor_pair_that_add_to_b[0] < 0:
-                    sign = '-'
-                    ac_factor_pair_that_add_to_b[0] *= -1
-                else:
-                    sign = '+'
-
-                if ac_factor_pair_that_add_to_b[1] < 0 :
-                    sign2 = '-'
-                    ac_factor_pair_that_add_to_b[1] *= -1
-                else:
-                    sign2 = '+'
-                equation = f'(x {sign} {ac_factor_pair_that_add_to_b[0]})(x {sign2} {ac_factor_pair_that_add_to_b[1]})'
-                return equation
-
-        else:
-            for a1 in a_factors:
-                for c1 in c_factors:
-                    c2 = c_factors[c1]
-                    a2 = a_factors[a1]
-
-                    if a1*c2 + a2*c1 == b and a1*a2==a and c1*c2 == c:
-                        if c2 < 0:
-                            sign = '-'
-                            c2 *= -1
-                        else:
-                            sign = '+'
-                        
-                        if c1 < 0 :
-                            sign2 = '-'
-                            c1 *= -1
-                        else:
-                            sign2 = '+'
-                        equation = f'({a1}x {sign2} {c1})({a2}x {sign} {c2})'
-
-                        return equation
-    else:
-        return False
 def f_of_x(formula:tuple,x:int|float, mode:int):
     if mode == 1:
         a = formula[0]
@@ -110,9 +25,7 @@ def get_good_num(formula:tuple, vertex:tuple,current_points:list) :
         add = False
         x_test = vertex[0] - 1
     result = 0.1
-
     while ".0" not in str(result) and x_test >  -20 and x_test < 20:
-
         print(x_test)
         y = f_of_x(formula,x_test,1)
         print(y)
@@ -137,7 +50,6 @@ def get_reflection(vertex:tuple,point_to_reflect:tuple):
         return new_point
     else:
         return False
-
 while True:
     cho = int(input("Mode:\n> "))
     if cho == 1:
@@ -177,13 +89,15 @@ while True:
         a = float(input("What is your a Term?\n> "))
         b = float(input("What is your b Term?\n> "))
         c = float(input("What is your c Term?\n> "))
-        x_of_vertex = -1 * b / 2*a
-        y_of_vertex = f_of_x((a,b,c),x_of_vertex,1)
-        print("Your Vertex form equation is " + str(a) +"(x -", str(x_of_vertex) +") + " + str(y_of_vertex))
-    elif cho == 5:
-        a = float(input("What is your a Term?\n> "))
-        b = float(input("What is your b Term?\n> "))
-        c = float(input("What is your c Term?\n> "))
-        factored = factor_standered_form_quadratic(1,b/a,c/a)
-        factored = str(a) + factored 
-        print(factored)
+        parts = [b/(2*a),c-(a*(b**2))/(2*a)**2]
+        if parts[0] > 0:
+            sign1 = "+"
+        else:
+            sign1 = "-"
+            parts[0] *= -1
+        if parts[1] > 0:
+            sign2 = "+"
+        else:
+            sign2 = "-"
+            parts[1] *= -1
+        print("y = "+str(a)+"(x "+str(sign1), str(parts[0])+")^2",str(sign2), str(parts[1]))
