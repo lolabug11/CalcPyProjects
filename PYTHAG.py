@@ -29,7 +29,7 @@ while True:
     t=float(input("How many degrees: "))
     c=a**2+b**2-2*a*b*cos(radians(t))
     c=sqrt(c)
-    print("Your C value is "+c)
+    print("Your C value is " + str(c))
   elif str(cho) == str(4):
     a = eval(input("What is the measure of your leg?\n> "))
     c = eval(input("What is the measure of your hypotonuse?\n> "))
