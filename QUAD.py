@@ -25,7 +25,9 @@ def get_good_num(formula:tuple, vertex:tuple,current_points:list) :
         add = False
         x_test = vertex[0] - 1
     result = 0.1
+
     while ".0" not in str(result) and x_test >  -20 and x_test < 20:
+
         print(x_test)
         y = f_of_x(formula,x_test,1)
         print(y)
@@ -89,15 +91,6 @@ while True:
         a = float(input("What is your a Term?\n> "))
         b = float(input("What is your b Term?\n> "))
         c = float(input("What is your c Term?\n> "))
-        parts = [b/(2*a),c-(a*(b**2))/(2*a)**2]
-        if parts[0] > 0:
-            sign1 = "+"
-        else:
-            sign1 = "-"
-            parts[0] *= -1
-        if parts[1] > 0:
-            sign2 = "+"
-        else:
-            sign2 = "-"
-            parts[1] *= -1
-        print("y = "+str(a)+"(x "+str(sign1), str(parts[0])+")^2",str(sign2), str(parts[1]))
+        x_of_vertex = -1 * b / 2*a
+        y_of_vertex = f_of_x((a,b,c),x_of_vertex,1)
+        print("Your Vertex form equation is " + a +"(x -", str(x_of_vertex) +") + " + k)
